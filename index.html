@@ -1,539 +1,599 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TerraElix - Natural Wellness Supplements & Products</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Tailwind Config -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['"DM Sans"', 'sans-serif'],
-            sans: ['Inter', 'sans-serif'],
-          },
-          letterSpacing: {
-            tighter: '-0.05em',
-            tight: '-0.03em',
-          },
-          colors: {
-            brand: {
-              sand: '#FEFDF9',
-              gray: '#ECEDEC',
-              dark: '#111111'
-            }
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura — Health, Medicine & Solutions Hub</title>
+    <style>
+        :root {
+            --primary: #2e5a44;
+            --primary-dark: #1e3d2d;
+            --accent: #8eb69b;
+            --accent-light: #e2efe6;
+            --bg: #f4f7f4;
+            --surface: #ffffff;
+            --text: #2c3e35;
+            --text-light: #52665a;
+            --warning-bg: #fff8e7;
+            --warning-border: #f0cc84;
+            --warning-text: #725300;
+            --danger-bg: #fdf2f2;
+            --danger-text: #9b2c2c;
         }
-      }
-    }
-  </script>
 
-  <!-- Custom Styles for Animations & Layout -->
-  <style>
-    html { scroll-behavior: smooth; }
-    
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-40px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(40px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes wordReveal {
-      from { opacity: 0; transform: translateY(100%); filter: blur(4px); }
-      to { opacity: 1; transform: translateY(0); filter: blur(0px); }
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .animate-fade-in { animation: fadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .animate-slide-left { animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .animate-slide-right { animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .animate-scale-in { animation: scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    
-    .animate-word-reveal { display: inline-block; overflow: hidden; vertical-align: bottom; }
-    .animate-word-reveal > span { 
-      display: inline-block; 
-      animation: wordReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; 
-    }
+        body {
+            background: linear-gradient(135deg, #f4f7f4 0%, #e8efe9 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            line-height: 1.6;
+        }
 
-    /* Delays */
-    .delay-200, .delay-200 > span { animation-delay: 0.2s; }
-    .delay-300, .delay-300 > span { animation-delay: 0.3s; }
-    .delay-400, .delay-400 > span { animation-delay: 0.4s; }
-    .delay-500, .delay-500 > span { animation-delay: 0.5s; }
-    .delay-600, .delay-600 > span { animation-delay: 0.6s; }
-    .delay-700, .delay-700 > span { animation-delay: 0.7s; }
-    .delay-800, .delay-800 > span { animation-delay: 0.8s; }
-    .delay-900, .delay-900 > span { animation-delay: 0.9s; }
-    .delay-1000, .delay-1000 > span { animation-delay: 1.0s; }
-    .delay-1100, .delay-1100 > span { animation-delay: 1.1s; }
-    
-    /* Product Card Hover Effects */
-    .product-card-img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-    .product-card:hover .product-card-img { transform: scale(1.05); }
-  </style>
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 1.2rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-  <!-- Import Maps for React/Lucide -->
-  <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@18.2.0",
-        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-        "lucide-react": "https://esm.sh/lucide-react@0.330.0"
-      }
-    }
-  </script>
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
 
-  <!-- Babel -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        nav a {
+            margin-left: 1.2rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 6rem 10%;
+            text-align: center;
+            background: linear-gradient(rgba(46, 90, 68, 0.75), rgba(46, 90, 68, 0.75)),
+                        url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            color: #ffffff;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #e3ede6;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            background-color: var(--surface);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .section-padding {
+            padding: 4rem 10%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Common Problems & Solutions Grid */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(142, 182, 155, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .problem-card h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .symptom-tag {
+            font-size: 0.85rem;
+            background: var(--accent-light);
+            color: var(--primary-dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .solution-box {
+            background: #f8fbf9;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .solution-box h4 {
+            color: var(--primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .solution-box ul {
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .warning-tag {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--danger-text);
+            background: var(--danger-bg);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+        }
+
+        /* Pillars of Health */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            text-align: left;
+            border: 1px solid rgba(142, 182, 155, 0.2);
+        }
+
+        .pillar-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Medicine Reference Table Cards */
+        .med-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .med-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border-top: 5px solid var(--primary);
+        }
+
+        .med-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .med-card .generic {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .med-info-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.95rem;
+        }
+
+        .med-info-list li {
+            margin-bottom: 0.8rem;
+            border-bottom: 1px dashed #e8efe9;
+            padding-bottom: 0.5rem;
+        }
+
+        .med-info-list li strong {
+            color: var(--primary-dark);
+        }
+
+        /* Interactive Tracker Section */
+        .tracker-container {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tracker-form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-field {
+            padding: 0.8rem;
+            border: 1px solid #c8d8cd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+        }
+
+        .med-list-display {
+            list-style: none;
+        }
+
+        .med-list-item {
+            background: var(--accent-light);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        /* Warning Box */
+        .disclaimer-box {
+            background-color: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: var(--warning-text);
+            text-align: center;
+        }
+
+        /* Footer & Contact */
+        footer {
+            background-color: var(--primary-dark);
+            color: #d1e0d5;
+            padding: 3rem 10% 2rem;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .contact-form input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+        }
+
+        .contact-form button {
+            border-radius: 20px;
+        }
+    </style>
 </head>
-<body class="bg-brand-sand text-black font-sans antialiased selection:bg-black selection:text-white">
-  <div id="root"></div>
+<body>
 
-  <script type="text/babel" data-type="module">
-    import React, { useState, useEffect } from 'react';
-    import { createRoot } from 'react-dom/client';
-    import { 
-      Search, ShoppingBag, CornerUpLeft, Menu, X, ArrowUpRight, 
-      FlaskConical, Leaf, Droplets, Sun, Star, ArrowRight, ShieldCheck, 
-      Sparkles, Activity
-    } from 'lucide-react';
-
-    const products = [
-      {
-        id: 1,
-        name: "Awaken Vitality Blend",
-        category: "Energy & Focus",
-        price: "$45.00",
-        rating: 4.9,
-        reviews: 128,
-        image: "https://images.unsplash.com/photo-1611078518335-502fcf7932fc?q=80&w=800&auto=format&fit=crop",
-        badge: "Best Seller"
-      },
-      {
-        id: 2,
-        name: "Deep Rest Drops",
-        category: "Sleep & Recovery",
-        price: "$38.00",
-        rating: 4.8,
-        reviews: 94,
-        image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=800&auto=format&fit=crop",
-        badge: null
-      },
-      {
-        id: 3,
-        name: "Immunity Shield Capsules",
-        category: "Daily Defense",
-        price: "$32.00",
-        rating: 5.0,
-        reviews: 215,
-        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=800&auto=format&fit=crop",
-        badge: "New Formula"
-      },
-      {
-        id: 4,
-        name: "Gut Harmony Powder",
-        category: "Digestion",
-        price: "$52.00",
-        rating: 4.7,
-        reviews: 86,
-        image: "https://images.unsplash.com/photo-1626806787426-5910811b6325?q=80&w=800&auto=format&fit=crop",
-        badge: null
-      }
-    ];
-
-    const Hero = ({ mobileMenuOpen, setMobileMenuOpen, currentSlide, carouselCards }) => (
-      <header className="min-h-screen flex flex-col relative overflow-hidden bg-black text-white">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 z-0 opacity-90"
-          style={{
-            backgroundImage: "url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260624_110248_b62f758d-f68c-4045-a7b4-91771d6d0a0f.png&w=1280&q=85')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat"
-          }}
-        />
-
-        {/* Navbar */}
-        <nav className="relative z-40 animate-fade-in flex items-center justify-between px-5 py-4 sm:px-8 lg:px-10 lg:py-5">
-          <div className="text-[30px] font-display font-medium tracking-tighter text-white animate-slide-left delay-200 cursor-pointer">
-            TerraElix
-          </div>
-
-          <div className="hidden lg:flex items-center gap-10 font-display font-medium text-[18px] text-white/90 animate-fade-in delay-400">
-            <a href="#about" className="hover:text-white transition-colors">About</a>
-            <a href="#products" className="hover:text-white transition-colors">Products</a>
-            <a href="#benefits" className="hover:text-white transition-colors">Benefits</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
-          </div>
-
-          <div className="flex items-center gap-4 sm:gap-5 animate-slide-right delay-300">
-            <button className="text-white hover:text-white/80 transition-colors">
-              <Search size={20} strokeWidth={1.5} />
-            </button>
-            <button className="text-white hover:text-white/80 transition-colors relative">
-              <ShoppingBag size={20} strokeWidth={1.5} />
-              <span className="absolute -top-1 -right-1 bg-white text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>
-            </button>
-            <button className="text-white hover:text-white/80 transition-colors hidden sm:block">
-              <CornerUpLeft size={20} strokeWidth={1.5} />
-            </button>
-            <img 
-              src="https://polo-pecan-73837341.figma.site/_assets/v11/ca8093996e970200cbcf8bde8744175e52da5a79.png" 
-              alt="User avatar" 
-              className="w-8 h-8 lg:w-10 lg:h-10 rounded-full object-cover border border-white/20 cursor-pointer"
-            />
-            <button 
-              className="md:hidden text-white"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+    <header>
+        <div class="logo">Aura Wellbeing</div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#problems">Problems & Solutions</a>
+            <a href="#medicine">Medicine Info</a>
+            <a href="#tracker">Tracker</a>
+            <a href="#contact">Contact</a>
         </nav>
+    </header>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center gap-8 md:hidden animate-fade-in">
-            <button onClick={() => setMobileMenuOpen(false)} className="absolute top-6 right-6 text-white"><X size={32}/></button>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-3xl text-white font-display font-medium">About</a>
-            <a href="#products" onClick={() => setMobileMenuOpen(false)} className="text-3xl text-white font-display font-medium">Products</a>
-            <a href="#benefits" onClick={() => setMobileMenuOpen(false)} className="text-3xl text-white font-display font-medium">Benefits</a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-3xl text-white font-display font-medium">Contact</a>
-          </div>
-        )}
+    <section class="hero">
+        <h1>Comprehensive Health & Wellness</h1>
+        <p>Your holistic hub for physical wellness, evidence-based health solutions, and medicine safety guidelines.</p>
+        <a href="#problems" class="btn">Explore Common Ailments</a>
+    </section>
 
-        {/* Hero Content */}
-        <section className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-10 relative z-20 pb-20 pt-10">
-          <div className="max-w-[1440px] w-full mx-auto">
-            <h1 className="font-display font-normal tracking-tighter text-[48px] leading-[50px] sm:text-[80px] sm:leading-[72px] md:text-[110px] md:leading-[95px] lg:text-[130px] lg:leading-[110px] xl:text-[155px] xl:leading-[125px]">
-              <div className="flex flex-wrap gap-x-3 sm:gap-x-5 lg:gap-x-8">
-                <span className="animate-word-reveal delay-300"><span className="text-white">The</span></span>
-                <span className="animate-word-reveal delay-400"><span className="text-white">Power</span></span>
-                <span className="animate-word-reveal delay-500"><span className="text-white/45">of</span></span>
-              </div>
-              <div className="flex flex-wrap gap-x-3 sm:gap-x-5 lg:gap-x-8">
-                <span className="animate-word-reveal delay-600"><span className="text-white/45">Nature</span></span>
-                <span className="animate-word-reveal delay-700"><span className="text-white/45">in</span></span>
-                <span className="animate-word-reveal delay-800"><span className="text-white">Every</span></span>
-              </div>
-              <div className="flex items-center gap-x-3 sm:gap-x-5 lg:gap-x-8">
-                <span className="animate-word-reveal delay-900"><span className="text-white">Capsule</span></span>
-                <img 
-                  src="https://polo-pecan-73837341.figma.site/_assets/v11/6a7de4fbe9c9e2315040607320a9ff5e93117bf4.png" 
-                  alt="Capsule"
-                  className="hidden sm:inline-block align-middle ml-2 lg:ml-4 animate-scale-in delay-1000 object-contain"
-                  style={{ height: 'clamp(60px, 10vw, 160px)', width: 'auto' }}
-                />
-              </div>
-            </h1>
-
-            <div className="mt-8 sm:mt-12 lg:mt-[75px] flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-8 lg:gap-[50px] animate-fade-up delay-600 relative z-30">
-              <a href="#products" className="flex items-center justify-center gap-3 bg-white text-black rounded-md w-full sm:w-[240px] md:w-[280px] lg:w-[310px] h-14 sm:h-16 lg:h-[72px] font-medium text-base sm:text-lg md:text-xl lg:text-2xl tracking-tight hover:bg-gray-200 transition-colors">
-                Explore Now
-                <ArrowUpRight size={24} />
-              </a>
-              <p className="text-white max-w-[310px] font-normal text-sm sm:text-base lg:text-lg leading-[1.45] tracking-tight">
-                Discover our new plant-based supplements for daily balance and clean energy.
-              </p>
+    <!-- About Health: 4 Pillars -->
+    <section class="section-padding" id="about">
+        <div class="section-header">
+            <h2>The Four Pillars of Total Health</h2>
+            <p>Balanced living requires attention to both lifestyle habits and proper clinical care.</p>
+        </div>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <h3>1. Nutrition</h3>
+                <p>Prioritize whole foods, proper hydration, and micronutrient density to keep metabolic functions running smoothly.</p>
             </div>
-          </div>
-        </section>
+            <div class="pillar-card">
+                <h3>2. Physical Activity</h3>
+                <p>Engage in 150+ minutes of moderate cardiovascular movement and progressive resistance training weekly.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>3. Rest & Recovery</h3>
+                <p>Target 7-9 hours of continuous sleep each night to allow tissue repair and proper mental clearing.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>4. Safe Medication</h3>
+                <p>Understand your prescriptions, respect dosages, and know potential interactions before starting any routine.</p>
+            </div>
+        </div>
+    </section>
 
-        {/* Desktop Product Image */}
-        <img 
-          src="https://polo-pecan-73837341.figma.site/_assets/v11/50ad042b3cd48a2e120ea3ba17c8cfeaf3cc334c.png" 
-          alt="TerraElix Supplements"
-          className="hidden lg:block absolute z-0 animate-scale-in delay-700 pointer-events-none"
-          style={{ width: 'clamp(600px, 80vw, 1412px)', height: 'auto', bottom: '-10%', right: 'clamp(-400px, -20vw, -100px)' }}
-        />
-
-        {/* Mobile Product Image */}
-        <div className="lg:hidden relative z-0 mt-8">
-          <img 
-            src="https://polo-pecan-73837341.figma.site/_assets/v11/50ad042b3cd48a2e120ea3ba17c8cfeaf3cc334c.png" 
-            alt="TerraElix Supplements Mobile"
-            className="w-[180%] sm:w-[151%] max-w-[1296px] object-contain mx-auto drop-shadow-2xl animate-scale-in delay-800"
-            style={{ marginBottom: 'clamp(-220px, -20vw, -180px)' }}
-          />
+    <!-- NEW SECTION: Common Health Problems & Solutions -->
+    <section class="section-padding" id="problems">
+        <div class="section-header">
+            <h2>Common Ailments & Solutions</h2>
+            <p>Practical remedies, lifestyle fixes, and guidance for everyday health complaints.</p>
         </div>
 
-        {/* 3-Panel Footer Strip */}
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_2fr] relative z-10 w-full mt-auto">
-          <div className="bg-brand-gray relative overflow-hidden px-6 py-8 sm:p-10 lg:p-14 min-h-[220px] lg:min-h-[280px] animate-fade-up delay-900 flex flex-col justify-between group">
-            <h2 className="font-display font-normal text-black text-2xl sm:text-[28px] lg:text-[35px] leading-[1.1] tracking-tighter max-w-[350px] relative z-10">
-              Start your personalized path to natural balance
-            </h2>
-            <a href="#" className="font-normal text-black underline text-base lg:text-lg tracking-tight mt-6 relative z-10 group-hover:text-black/70 transition-colors">
-              Personal Assessment
-            </a>
-            <img 
-              src="https://polo-pecan-73837341.figma.site/_assets/v11/6736cbe6e26afa2cd7c04a91892a79f7640785b5.png" 
-              alt="Decorative leaves"
-              className="absolute right-0 bottom-0 h-full object-cover mix-blend-multiply opacity-80 pointer-events-none"
-            />
-          </div>
-
-          <div className="bg-brand-sand relative px-6 py-8 sm:p-10 lg:p-14 min-h-[220px] lg:min-h-[280px] flex flex-col justify-between animate-fade-up delay-1000 overflow-hidden">
-            <div className="relative flex-1">
-              {carouselCards.map((card, idx) => {
-                const Icon = card.icon;
-                return (
-                  <div key={idx} className={`absolute inset-0 flex flex-col transition-all duration-700 ease-in-out ${currentSlide === idx ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${card.bg} flex items-center justify-center mb-4 sm:mb-6`}>
-                      <Icon size={20} className="text-white" />
-                    </div>
-                    <p className="font-normal text-black/80 text-sm sm:text-base lg:text-lg leading-[1.2] tracking-tight">{card.text}</p>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="flex gap-2 mt-4 z-10 relative">
-              {carouselCards.map((_, idx) => (
-                <div key={idx} className={`h-0.5 flex-1 rounded-full transition-colors duration-500 ${currentSlide === idx ? 'bg-black' : 'bg-black/20'}`}></div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-brand-dark text-white px-6 py-8 sm:p-10 lg:p-14 min-h-[220px] lg:min-h-[280px] animate-fade-up delay-1100 flex items-center gap-6 lg:gap-10">
-            <img 
-              src="https://polo-pecan-73837341.figma.site/_assets/v11/30e8f38d1f993c357a3be2721557fc899d5640fc.png" 
-              alt="Product Jar"
-              className="w-[120px] h-[82px] sm:w-[160px] sm:h-[110px] lg:w-[208px] lg:h-[142px] object-cover shrink-0 rounded-sm"
-            />
-            <div className="flex flex-col gap-2">
-              <span className="font-normal text-2xl sm:text-3xl lg:text-[35px] tracking-tighter">+14K</span>
-              <span className="font-normal text-white/60 text-sm sm:text-base lg:text-lg leading-[1.2]">
-                People have already optimized their wellness
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
-    );
-
-    const FeaturesSection = () => (
-      <section id="benefits" className="py-20 lg:py-32 px-5 sm:px-8 lg:px-10 bg-brand-sand border-b border-black/10">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-            <div>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-tighter leading-[1.1] mb-6">
-                Redefining the standard of daily wellness.
-              </h2>
-              <p className="text-black/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-lg">
-                We believe in full transparency. Our formulas are crafted with bioavailable ingredients, free from synthetic fillers, and rigorously tested for purity.
-              </p>
-              
-              <div className="space-y-6">
-                {[
-                  { icon: ShieldCheck, title: "Clinically Studied Doses", desc: "Every ingredient is included at levels proven to deliver real results." },
-                  { icon: Sparkles, title: "Clean & Plant-Based", desc: "100% vegan formulations without artificial binders or colorants." },
-                  { icon: Activity, title: "High Bioavailability", desc: "Formulated with delivery systems that ensure your body absorbs what it needs." }
-                ].map((feature, idx) => (
-                  <div key={idx} className="flex gap-4 sm:gap-6">
-                    <div className="w-12 h-12 rounded-full bg-brand-gray flex items-center justify-center shrink-0">
-                      <feature.icon size={24} className="text-black" />
-                    </div>
-                    <div>
-                      <h4 className="font-display font-medium text-xl mb-1">{feature.title}</h4>
-                      <p className="text-black/60 leading-relaxed text-sm sm:text-base">{feature.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="relative h-[500px] sm:h-[600px] rounded-2xl overflow-hidden bg-brand-gray">
-              <img 
-                src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=1200&auto=format&fit=crop" 
-                alt="Wellness lifestyle" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/10"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-
-    const ProductsSection = () => (
-      <section id="products" className="py-20 lg:py-32 px-5 sm:px-8 lg:px-10 bg-white">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-end gap-6 mb-12 lg:mb-20">
-            <div className="max-w-2xl">
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-tighter leading-[1.1] mb-4">
-                Targeted formulations for your daily rituals.
-              </h2>
-              <p className="text-black/60 text-lg">Select from our premium range of scientifically-backed supplements.</p>
-            </div>
-            <a href="#" className="flex items-center gap-2 font-medium text-lg hover:text-black/60 transition-colors border-b border-black pb-1 shrink-0">
-              View All Products <ArrowRight size={20} />
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {products.map((product) => (
-              <div key={product.id} className="product-card group cursor-pointer flex flex-col h-full">
-                <div className="relative aspect-[4/5] bg-brand-gray rounded-xl overflow-hidden mb-5">
-                  {product.badge && (
-                    <div className="absolute top-4 left-4 z-10 bg-white text-black px-3 py-1 rounded-full text-xs font-medium tracking-tight">
-                      {product.badge}
-                    </div>
-                  )}
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="product-card-img w-full h-full object-cover mix-blend-multiply"
-                  />
-                  <div className="absolute inset-x-4 bottom-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                    <button className="w-full bg-black text-white py-4 rounded-lg font-medium tracking-tight hover:bg-black/90">
-                      Quick Add — {product.price}
-                    </button>
-                  </div>
+        <div class="problems-grid">
+            <!-- Problem 1 -->
+            <div class="problem-card">
+                <div>
+                    <h3>Tension Headaches</h3>
+                    <span class="symptom-tag">Symptoms: Dull aching head pain, tightness across forehead</span>
+                    <p style="font-size:0.95rem; color: var(--text-light);">Often triggered by stress, dehydration, poor screen posture, or eye strain.</p>
                 </div>
-                
-                <div className="flex-1 flex flex-col">
-                  <div className="flex justify-between items-start mb-1">
-                    <span className="text-black/50 text-xs font-medium uppercase tracking-widest">{product.category}</span>
-                    <div className="flex items-center gap-1 text-xs font-medium">
-                      <Star size={12} className="fill-black text-black" />
-                      {product.rating} ({product.reviews})
+                <div>
+                    <div class="solution-box">
+                        <h4>Recommended Action:</h4>
+                        <ul>
+                            <li>Drink 500ml of fresh water immediately.</li>
+                            <li>Take a 10-minute break away from screens (20-20-20 rule).</li>
+                            <li>Apply a cool compress to forehead or neck.</li>
+                            <li><strong>OTC Option:</strong> Acetaminophen or Ibuprofen if persistent.</li>
+                        </ul>
                     </div>
-                  </div>
-                  <h3 className="font-display text-xl sm:text-2xl tracking-tight mb-2">{product.name}</h3>
-                  <div className="mt-auto font-medium">{product.price}</div>
+                    <div class="warning-tag">⚠️ See a doctor if headache is sudden, severe ("thunderclap"), or accompanied by fever.</div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-
-    const Footer = () => (
-      <footer id="contact" className="bg-brand-dark text-white pt-20 pb-10 px-5 sm:px-8 lg:px-10">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
-            <div className="lg:col-span-1">
-              <div className="text-[30px] font-display font-medium tracking-tighter text-white mb-6">
-                TerraElix
-              </div>
-              <p className="text-white/60 leading-relaxed mb-6 max-w-xs">
-                Elevating your daily wellness through science-backed, natural formulations.
-              </p>
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors">IG</a>
-                <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors">TT</a>
-                <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors">TW</a>
-              </div>
             </div>
+
+            <!-- Problem 2 -->
+            <div class="problem-card">
+                <div>
+                    <h3>Acid Reflux & Heartburn</h3>
+                    <span class="symptom-tag">Symptoms: Burning sensation in chest, sour taste in mouth</span>
+                    <p style="font-size:0.95rem; color: var(--text-light);">Occurs when stomach acid flows backward into the esophagus after heavy or spicy meals.</p>
+                </div>
+                <div>
+                    <div class="solution-box">
+                        <h4>Recommended Action:</h4>
+                        <ul>
+                            <li>Avoid lying down for 3 hours after eating.</li>
+                            <li>Sip warm water or chamomile tea; avoid caffeine/alcohol.</li>
+                            <li>Elevate head during rest.</li>
+                            <li><strong>OTC Option:</strong> Antacids (Tums, Calcium Carbonate) or H2 Blockers.</li>
+                        </ul>
+                    </div>
+                    <div class="warning-tag">⚠️ Seek urgent care if chest pain radiates to the jaw or arm.</div>
+                </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="problem-card">
+                <div>
+                    <h3>Insomnia & Sleep Disturbance</h3>
+                    <span class="symptom-tag">Symptoms: Difficulty falling asleep, waking frequently</span>
+                    <p style="font-size:0.95rem; color: var(--text-light);">Driven by high cortisol/stress, blue light exposure late at night, or irregular sleep hours.</p>
+                </div>
+                <div>
+                    <div class="solution-box">
+                        <h4>Recommended Action:</h4>
+                        <ul>
+                            <li>Shut off digital screens 60 minutes prior to bed.</li>
+                            <li>Keep bedroom temperature low (around 18-20°C / 65-68°F).</li>
+                            <li>Practice 4-7-8 deep breathing exercises.</li>
+                            <li>Avoid heavy meals or caffeine within 6 hours of bedtime.</li>
+                        </ul>
+                    </div>
+                    <div class="warning-tag">⚠️ Consult a sleep specialist if insomnia lasts over 3 weeks.</div>
+                </div>
+            </div>
+
+            <!-- Problem 4 -->
+            <div class="problem-card">
+                <div>
+                    <h3>Chronic Low Energy / Fatigue</h3>
+                    <span class="symptom-tag">Symptoms: Brain fog, sluggishness, difficulty concentrating</span>
+                    <p style="font-size:0.95rem; color: var(--text-light);">Frequently linked to mild dehydration, poor diet, deficiency in Iron or Vitamin D, or sedentary habits.</p>
+                </div>
+                <div>
+                    <div class="solution-box">
+                        <h4>Recommended Action:</h4>
+                        <ul>
+                            <li>Take a 15-minute brisk walk in natural sunlight.</li>
+                            <li>Ensure baseline daily water intake (2.5L–3L per day).</li>
+                            <li>Reduce processed sugar snacks that trigger insulin spikes.</li>
+                            <li>Prioritize consistent sleep schedules.</li>
+                        </ul>
+                    </div>
+                    <div class="warning-tag">⚠️ Get bloodwork done if fatigue persists despite adequate sleep and diet.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medicine Details Section -->
+    <section class="section-padding" id="medicine">
+        <div class="section-header">
+            <h2>Common Over-The-Counter Medicine Reference</h2>
+            <p>Crucial information on indications, standard dosages, and side effects.</p>
+        </div>
+
+        <div class="med-grid">
+            <!-- Pain / Fever Card -->
+            <div class="med-card">
+                <h3>Acetaminophen</h3>
+                <div class="generic">Brand names: Tylenol, Panadol</div>
+                <ul class="med-info-list">
+                    <li><strong>Indications:</strong> Mild to moderate pain relief, fever reduction.</li>
+                    <li><strong>Standard Dosage:</strong> 325 mg – 650 mg every 4 to 6 hours as needed (Max 3,000 mg/day).</li>
+                    <li><strong>Common Side Effects:</strong> Nausea, headache (rare at normal doses).</li>
+                    <li><strong>Key Safety Note:</strong> Avoid alcohol. Excessive use can cause severe liver damage.</li>
+                </ul>
+            </div>
+
+            <!-- Anti-Inflammatory Card -->
+            <div class="med-card">
+                <h3>Ibuprofen</h3>
+                <div class="generic">Brand names: Advil, Motrin (NSAID)</div>
+                <ul class="med-info-list">
+                    <li><strong>Indications:</strong> Muscle aches, joint inflammation, dental pain, fever.</li>
+                    <li><strong>Standard Dosage:</strong> 200 mg – 400 mg every 4 to 6 hours with food.</li>
+                    <li><strong>Common Side Effects:</strong> Stomach upset, heartburn, mild dizziness.</li>
+                    <li><strong>Key Safety Note:</strong> Always take with food or milk to protect stomach lining.</li>
+                </ul>
+            </div>
+
+            <!-- Allergy Card -->
+            <div class="med-card">
+                <h3>Loratadine</h3>
+                <div class="generic">Brand names: Claritin</div>
+                <ul class="med-info-list">
+                    <li><strong>Indications:</strong> Seasonal allergies, sneezing, runny nose, watery eyes.</li>
+                    <li><strong>Standard Dosage:</strong> 10 mg once daily (non-drowsy formulation).</li>
+                    <li><strong>Common Side Effects:</strong> Dry mouth, fatigue, mild headache.</li>
+                    <li><strong>Key Safety Note:</strong> Do not exceed 10 mg per 24 hours unless directed by a physician.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>Medical Notice:</strong> Information provided here is intended strictly for educational reference and does not replace medical advice. Consult a healthcare practitioner or pharmacist regarding individual medical needs.
+        </div>
+    </section>
+
+    <!-- Interactive Medicine Tracker -->
+    <section class="section-padding" id="tracker">
+        <div class="section-header">
+            <h2>Personal Daily Medication Schedule</h2>
+            <p>Log your personal daily routine below to keep track of timing and dosage.</p>
+        </div>
+
+        <div class="tracker-container">
+            <div class="tracker-form">
+                <input type="text" id="medName" class="input-field" placeholder="Medication Name">
+                <input type="text" id="medDose" class="input-field" placeholder="Dose (e.g. 200mg)">
+                <input type="time" id="medTime" class="input-field">
+                <button class="btn" onclick="addMedication()">Add Entry</button>
+            </div>
+
+            <ul class="med-list-display" id="medList">
+                <li class="med-list-item">
+                    <span><strong>Multivitamin</strong> — 1 Tablet</span>
+                    <span>08:00 AM</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer & Contact Form -->
+    <footer id="contact">
+        <h3 style="margin-bottom: 1rem;">Stay Connected to Wellness</h3>
+        <p style="margin-bottom: 1.5rem; color: #a4c2ad;">Subscribe to our newsletter for weekly health articles and medical safety updates.</p>
+        
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+            <input type="email" placeholder="Enter your email address" required>
+            <button class="btn" type="submit">Subscribe</button>
+        </form>
+
+        <p style="font-size: 0.85rem; color: #83a58e;">&copy; 2026 Aura Wellbeing & Medical Guide. All rights reserved.</p>
+    </footer>
+
+    <!-- Interactive JS Script for Tracker -->
+    <script>
+        function addMedication() {
+            const name = document.getElementById('medName').value;
+            const dose = document.getElementById('medDose').value;
+            const time = document.getElementById('medTime').value;
+
+            if (name === '' || dose === '' || time === '') {
+                alert('Please fill in all details.');
+                return;
+            }
+
+            const list = document.getElementById('medList');
+            const li = document.createElement('li');
+            li.className = 'med-list-item';
+            li.innerHTML = `<span><strong>${name}</strong> — ${dose}</span> <span>${time}</span>`;
             
-            <div>
-              <h4 className="font-display text-lg mb-6">Shop</h4>
-              <ul className="space-y-4 text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">All Products</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Best Sellers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Bundles & Kits</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Gift Cards</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-display text-lg mb-6">About</h4>
-              <ul className="space-y-4 text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">Our Story</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Ingredients</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Sustainability</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Journal</a></li>
-              </ul>
-            </div>
+            list.appendChild(li);
 
-            <div>
-              <h4 className="font-display text-lg mb-6">Newsletter</h4>
-              <p className="text-white/60 mb-4 text-sm">Subscribe to receive 10% off your first order and exclusive wellness insights.</p>
-              <div className="flex">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="bg-transparent border-b border-white/30 py-2 w-full focus:outline-none focus:border-white text-white rounded-none"
-                />
-                <button className="border-b border-white/30 py-2 hover:border-white transition-colors">
-                  <ArrowRight size={20} />
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-white/40 text-sm">
-            <p>&copy; 2026 TerraElix Inc. All rights reserved.</p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    );
-
-    const App = () => {
-      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const [currentSlide, setCurrentSlide] = useState(0);
-
-      const carouselCards = [
-        { icon: FlaskConical, bg: 'bg-black', text: 'Experience our newly enhanced natural formula' },
-        { icon: Leaf, bg: 'bg-emerald-800', text: 'Pure organic ingredients sourced sustainably' },
-        { icon: Droplets, bg: 'bg-cyan-800', text: 'Advanced bioavailability for maximum absorption' },
-        { icon: Sun, bg: 'bg-amber-700', text: 'Clinically tested for daily energy & vitality' }
-      ];
-
-      useEffect(() => {
-        const interval = setInterval(() => {
-          setCurrentSlide(prev => (prev + 1) % carouselCards.length);
-        }, 3500);
-        return () => clearInterval(interval);
-      }, [carouselCards.length]);
-
-      return (
-        <div className="w-full">
-          <Hero 
-            mobileMenuOpen={mobileMenuOpen} 
-            setMobileMenuOpen={setMobileMenuOpen} 
-            currentSlide={currentSlide}
-            carouselCards={carouselCards}
-          />
-          <FeaturesSection />
-          <ProductsSection />
-          <Footer />
-        </div>
-      );
-    };
-
-    const root = createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
+            // Clear inputs
+            document.getElementById('medName').value = '';
+            document.getElementById('medDose').value = '';
+            document.getElementById('medTime').value = '';
+        }
+    </script>
 </body>
 </html>
